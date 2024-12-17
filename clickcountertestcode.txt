@@ -1,0 +1,46 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+    public class ClickcounterTest {
+        public static void main(String[] args) {
+            // Step 1: Set up WebDriver (update path to ChromeDriver as per your system)
+            System.setProperty("webdriver.chrome.driver", "C:\\Users\\Srisr\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
+            WebDriver driver = new ChromeDriver();
+
+            try {
+                // Step 2: Navigate to the application URL
+                driver.get("https://qaclickcounter.ccbp.tech/");
+
+                // Step 3: Find the "Click Me!" button
+                WebElement clickMeButton = driver.findElement(By.xpath("//button[contains(text(), 'Click Me!')]"));
+
+                // Step 4: Find the counter <span> element
+                WebElement counterElement = driver.findElement(By.xpath("//span[contains(@class, 'counter')]"));
+
+                // Step 5: Iterate 100 times
+                for (int i = 1; i <= 100; i++) {
+                    // Click the button
+                    clickMeButton.click();
+
+                    // Get the counter text
+                    String counterText = counterElement.getText();
+
+                    // Verify the counter matches the iteration count
+                    if (!counterText.equals(String.valueOf(i))) {
+                        System.out.println("Mismatch in count at iteration: " + i);
+                        break;
+                    }
+                }
+
+                // If loop completes successfully
+                System.out.println("Click Counter App: Working as expected");
+            } finally {
+                // Step 6: Close the browser
+                driver.quit();
+            }
+        }
+    }
+
+
